@@ -1,0 +1,113 @@
+<html>
+<head>
+<script src="jquery.js" > </script>
+<style>
+  #output {
+    font-size: 50px;
+    font-color: gray;
+    font-family: Helvetica,Arial,Monaco
+  }
+  body {
+    background-color: rgba(50,50,50,1);
+  }
+  #padding-container {
+    padding: 50px 200px 50px 200px;
+    border: 1px solid red;
+    background:url("spirals/optical_illusion_spiral.jpg");
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position: center;
+    z-index: 0;
+  }
+  #padding-container-bg {
+    margin: -50px -200px -50px -200px;
+    background-color: rgba(50,50,50,.6);
+    z-index: 1;
+  }
+  #container {
+    color: rgba(210,210,250,1);
+    text-align:center;
+    height: 100%;
+    width: 100%;
+    border:1px solid darkred;
+  }
+  #trans-container {
+    height: 100%;
+    width: 100%;
+  }
+  .fadeOutput {
+    padding-top: 00px;
+  }
+  td.fadeContent {
+    border:2px solid green;
+    height: 100%;
+    width: 100%;
+    padding-left: 300px;
+    padding-right: 300px;
+  }
+  #container table {
+    height: 100%;
+    width: 100%;
+    color: rgba(210,210,250,1);
+  }
+
+</style>
+
+<script>
+  var openFile = function(event) {
+    var input = event.target;
+    fadeDuration = 2200;
+    wordDuration = 750;
+    waitBetweenWords = 00;
+    var reader = new FileReader();
+    reader.onload = function(){
+
+      var text = reader.result;
+      list = text.split("\n");
+      node = $("#output");
+//      node.innerText = text;
+      console.log(reader.result.substring(0, 200));
+    };
+    reader.readAsText(input.files[0]);
+    i=0;
+    $("#input").fadeOut();
+    t = setInterval(
+      function() {
+        if(i==list.length) {
+          clearInterval(t);
+        }
+        else {
+          node.fadeOut(fadeDuration, function() {
+            node.html(list[i]);
+            i++;
+            t2 = setTimeout(
+              function() {node.fadeIn(fadeDuration);},
+              wordDuration
+            );
+          });
+        }
+      }, fadeDuration*2 + waitBetweenWords + wordDuration
+    );
+  };
+</script>
+</head>
+<body>
+  <div id="padding-container">
+    <div id="padding-container-bg">
+      <div id="container">
+        <div id="trans-container">
+          <table>
+            <tr>
+              <td class="fadeContent" valign="center" align="center">
+                <div id="input"><input type='file' accept='text/plain' onchange='openFile(event)'><br></div>
+                <div id='output' class="fadeOutput">
+                  Your text will appear here. Click "browse" to upload a text file.
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
