@@ -1,0 +1,7 @@
+Remove color borders
+Make margin size, font, and colors customizable
+Make customization panel hide and be unhidable
+after pressing start, require clickthrough warning about screensaver, do not disturb mode
+allow live preview of file while adjusting parameters
+after completion, brighten screen and recommend turning off DND mode
+Selector for backgrounds. Allow custom backgrounds?
