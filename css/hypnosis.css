@@ -1,0 +1,81 @@
+#output {
+  font-size: 50px;
+  font-color: gray;
+  font-family: Helvetica,Arial,Monaco;
+  border: 2px dotted darkblue;
+}
+body {
+  background-color: rgba(50,50,50,1);
+}
+#padding-container {
+  padding-top: 50px;
+  padding-right: 200px;
+  padding-bottom: 50px;
+  padding-left: 200px;
+  border: 1px solid red;
+  background:url("spirals/optical_illusion_spiral.jpg");
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position: center;
+  z-index: 0;
+}
+#padding-container-bg {
+  margin-top: -50px;
+  margin-right: -200px;
+  margin-bottom: -50px;
+  margin-left: -200px;
+  background-color: rgba(50,50,50,.6);
+  z-index: 1;
+}
+#container {
+  color: rgba(210,210,250,1);
+  text-align:center;
+  height: 100%;
+  width: 100%;
+  border:1px solid darkred;
+}
+#trans-container {
+  height: 100%;
+  width: 100%;
+}
+.fadeOutput {
+  padding-top: 00px;
+}
+td.fadeContent {
+  border:2px solid green;
+  height: 100%;
+  width: 100%;
+  padding-left: 300px;
+  padding-right: 300px;
+}
+#container table {
+  height: 100%;
+  width: 100%;
+  color: rgba(210,210,250,1);
+}
+#info {
+  display: none;
+  padding-top: 30px;
+}
+#configTrigger {
+  background-color: none;
+  border: 1px solid purple;
+  position: absolute;
+  x: 0;
+  y: 0;
+  height: 200px;
+  width: 200px;
+}
+#config {
+	font-family: sans-serif;
+	color: black;
+	background-color: rgba(255,255,255,.7);
+	border-radius: 10px;
+	font-size: 18px;
+	text-align: left;
+	padding: 5px 5px;
+	line-height: 1em;
+}
+.option {
+	margin: 5px 5px 15px 5px;
+}

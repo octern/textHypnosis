@@ -1,64 +1,60 @@
 <html>
 <head>
-<script src="jquery.js" > </script>
-<style>
-  #output {
-    font-size: 50px;
-    font-color: gray;
-    font-family: Helvetica,Arial,Monaco
-  }
-  body {
-    background-color: rgba(50,50,50,1);
-  }
-  #padding-container {
-    padding: 50px 200px 50px 200px;
-    border: 1px solid red;
-    background:url("spirals/optical_illusion_spiral.jpg");
-    background-size:cover;
-    background-repeat:no-repeat;
-    background-position: center;
-    z-index: 0;
-  }
-  #padding-container-bg {
-    margin: -50px -200px -50px -200px;
-    background-color: rgba(50,50,50,.6);
-    z-index: 1;
-  }
-  #container {
-    color: rgba(210,210,250,1);
-    text-align:center;
-    height: 100%;
-    width: 100%;
-    border:1px solid darkred;
-  }
-  #trans-container {
-    height: 100%;
-    width: 100%;
-  }
-  .fadeOutput {
-    padding-top: 00px;
-  }
-  td.fadeContent {
-    border:2px solid green;
-    height: 100%;
-    width: 100%;
-    padding-left: 300px;
-    padding-right: 300px;
-  }
-  #container table {
-    height: 100%;
-    width: 100%;
-    color: rgba(210,210,250,1);
-  }
+    <link rel='stylesheet' href='css/spectrum.css' />
+    <link rel='stylesheet' type="text/css" href='css/hypnosis.css' />
+    <link rel='stylesheet' href='hypnosis.css' />
+    <script src="jquery.js" > </script>
+    <script src='js/spectrum.js'></script>
+    <style>
 
-</style>
+    </style>
 
 <script>
+
+// strings and config variables
+
+startingString = "Your text will appear here in a few seconds.";
+fadeDuration = 2200;
+wordDuration = 750;
+waitBetweenWords = 0;
+defaultWidth = 300;
+
+function hypWidthChange(widthVal) {
+    widthVal = Number(widthVal);
+    console.log("change margin size to "+widthVal);
+    if(isNaN(widthVal)) {
+        return(false);
+    }
+    negVal = widthVal * -1;
+    $( '.fadeContent' ).css("padding-left", widthVal);
+    $( '.fadeContent' ).css("padding-right", widthVal);
+    // $( '#padding-container' ).css("padding-left", widthVal);
+    // $( '#padding-container' ).css("padding-right", widthVal);
+    // $( '#padding-container-bg' ).css("margin-left", negVal);
+    // $( '#padding-container-bg' ).css("margin-right", negVal);
+    return(true);
+}
+
+    displayer = "";
+  $( 'document' ).ready( function() {
+      $(' #hypWidthInput ').val(defaultWidth);
+      $(' #configTrigger ').click( function() {
+          $('#config').toggle();
+      });
+      $( '#hypWidthInput' ).change( function() {
+          val = $( '#hypWidthInput' ).val();
+          hypWidthChange(val);
+      });
+      $("#hypColorInput").spectrum({
+          color: "#555"
+      });
+      $( '#hypColorInput' ).change( function() {
+         $( '#output' ).css("color", $( '#hypColorInput' ).get());
+      });
+  });
   var openFile = function(event) {
+      clearInterval(displayer);
     var input = event.target;
-    fadeDuration = 2200;
-    wordDuration = 750;
-    waitBetweenWords = 00;
     var reader = new FileReader();
     reader.onload = function(){
 
@@ -70,11 +66,17 @@
     };
     reader.readAsText(input.files[0]);
     i=0;
-    $("#input").fadeOut();
-    t = setInterval(
+    $("#config").fadeOut();
+    node = $("#output");
+    node.hide();
+    node.html(startingString);
+    node.fadeIn(2000, function() {
+        node.fadeOut(4000);
+    });
+    displayer = setInterval(
       function() {
         if(i==list.length) {
-          clearInterval(t);
+          clearInterval(displayer);
         }
         else {
           node.fadeOut(fadeDuration, function() {
@@ -92,6 +94,9 @@
 </script>
 </head>
 <body>
+  <div id="configTrigger">
+    &nbsp;
+  </div>
   <div id="padding-container">
     <div id="padding-container-bg">
       <div id="container">
@@ -99,9 +104,28 @@
           <table>
             <tr>
               <td class="fadeContent" valign="center" align="center">
-                <div id="input"><input type='file' accept='text/plain' onchange='openFile(event)'><br></div>
+                <div id="config">
+                    <div class="option" id="hypWidth">
+                        Left and right margin size: <input type="text" size="5" value="200" id="hypWidthInput" name="hypWidthInput"><br>
+                        <em>Incease this to minimize left-right eye motion</em>
+                    </div>
+                    <div class="option" id="hypColor">
+                        Text color: <input type="text" id="hypColorInput" name="hypColorInput"><br>
+                    </div>
+                    <div class="option" id="hypText">
+                        Hypnosis text: <input type='file' accept='text/plain' onchange='openFile(event); $(" #start ").show();'><br>
+                    </div>
+                </div>
+                <div id='info' class="info">
+                    Before you start:<ul>
+                        <li>Make sure Caffeine is on / sleep is off
+                        </li><li>Make sure screensaver is off or mouse is in hot corner
+                        </li><li>Remember that you can reopen the settings by clicking in the upper left corner
+                    </ul>
+                    <button id="start" name="start">Start</button>
+                </div>
                 <div id='output' class="fadeOutput">
-                  Your text will appear here. Click "browse" to upload a text file.
+                  Hypnosis text will appear here after you click "start".
                 </div>
               </td>
             </tr>
